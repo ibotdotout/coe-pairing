@@ -37,3 +37,11 @@ class VasyaClerkTest(unittest.TestCase):
     def test_give_25_25_50_should_be_ture(self):
         l = [25, 25, 50]
         self._help_assert(l, True)
+
+    def test_give_25_25_25_100_should_be_ture(self):
+        l = [25, 25, 25, 100]
+        self._help_assert(l, True)
+
+    def test_give_25_100_50_should_be_false(self):
+        l = [25, 100, 50]
+        self._help_assert(l, False)
