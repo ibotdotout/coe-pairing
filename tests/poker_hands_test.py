@@ -8,6 +8,28 @@ class PokerHandsTest(unittest.TestCase):
     pass
 
 
+class CompareCardTest(unittest.TestCase):
+
+    def _helpper_assert(self, a, b, answer):
+        result = pk.compare(a, b)
+        self.assertEqual(result, answer)
+
+    def test_give_3C_7D_should_be_lose(self):
+        a, b = "3C", "7D"
+        answer = pk.LOSE
+        self._helpper_assert(a, b, answer)
+
+    def test_give_7D_3C_should_be_win(self):
+        a, b = "7D", "3C"
+        answer = pk.WIN
+        self._helpper_assert(a, b, answer)
+
+    def test_give_AD_AC_should_be_draw(self):
+        a, b = "AD", "AC"
+        answer = pk.DRAW
+        self._helpper_assert(a, b, answer)
+
+
 class CardScoreTest(unittest.TestCase):
 
     def _helpper_assert(self, card, answer):
