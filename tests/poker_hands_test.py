@@ -8,6 +8,42 @@ class PokerHandsTest(unittest.TestCase):
     pass
 
 
+class CompareCardsTest(unittest.TestCase):
+
+    def _helpper_assert(self, player1, player2, answer):
+        result = pk.highcards_compare(player1, player2)
+        self.assertEqual(result, answer)
+
+    def test_same_player_should_be_draw(self):
+        player1 = ["2H"] * 5
+        answer = pk.DRAW
+        self._helpper_assert(player1, player1, answer)
+
+    def test_win_in_first_card_should_be_win(self):
+        player1 = ["7H"] * 5
+        player2 = ["2H"] * 5
+        answer = pk.WIN
+        self._helpper_assert(player1, player2, answer)
+
+    def test_lose_in_first_card_should_be_lose(self):
+        player1 = ["2H"] * 5
+        player2 = ["3H"] * 5
+        answer = pk.LOSE
+        self._helpper_assert(player1, player2, answer)
+
+    def test_lose_in_second_card_should_be_lose(self):
+        player1 = ["2H"] * 4 + ["3H"]
+        player2 = ["3H"] * 5
+        answer = pk.LOSE
+        self._helpper_assert(player1, player2, answer)
+
+    def test_lose_in_third_card_should_be_lose(self):
+        player1 = ["3H"] * 3 + ["AH"] * 2
+        player2 = ["AH"] * 5
+        answer = pk.LOSE
+        self._helpper_assert(player1, player2, answer)
+
+
 class CompareCardTest(unittest.TestCase):
 
     def _helpper_assert(self, a, b, answer):
