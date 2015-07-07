@@ -47,18 +47,23 @@ class CompareHighRankCardsTest(unittest.TestCase):
 
 class CompareCardTest(unittest.TestCase):
 
-    def _helpper_assert(self, a, b, answer):
-
+    def decorator_stub(func):
         expected_score_table = {"3": 3, "7": 7, "A": 14}
-        old_get_score = pk.get_card_score
-        try:
-            pk.get_card_score = lambda x: expected_score_table[x[0]]
 
-            result = pk.compare(a, b)
-            self.assertEqual(result, answer)
+        def inner(*args, **kwargs):
+            old_get_score = pk.get_card_score
+            try:
+                pk.get_card_score = lambda x: expected_score_table[x[0]]
+                func(*args, **kwargs)
+            finally:
+                pk.get_card_score = old_get_score
 
-        finally:
-            pk.get_card_score = old_get_score
+        return inner
+
+    @decorator_stub
+    def _helpper_assert(self, a, b, answer):
+        result = pk.compare(a, b)
+        self.assertEqual(result, answer)
 
     def test_give_3C_7D_should_be_lose(self):
         a, b = "3C", "7D"
