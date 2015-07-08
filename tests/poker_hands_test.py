@@ -48,13 +48,7 @@ class CompareHighRankCardsTest(unittest.TestCase):
 class CompareCardTest(unittest.TestCase):
 
     def _helpper_assert(self, a, b, answer):
-
-        def cal_score(x):
-            expected_score_table = {"3": 3, "7": 7, "A": 14}
-            return expected_score_table[x[0]]
-
-        result = pk.compare(a, b, cal_score)
-
+        result = pk.compare(a, b)
         self.assertEqual(result, answer)
 
     def test_give_3C_7D_should_be_lose(self):
@@ -73,7 +67,28 @@ class CompareCardTest(unittest.TestCase):
         self._helpper_assert(a, b, answer)
 
 
-@unittest.skip('')
+class IsPlayer1WinTest(unittest.TestCase):
+
+    def _helpper_assert(self, a, b, answer):
+        result = pk.is_player1_win(a, b)
+        self.assertEqual(result, answer)
+
+    def test_give_3_7_should_be_lose(self):
+        a, b = 3, 7
+        answer = pk.LOSE
+        self._helpper_assert(a, b, answer)
+
+    def test_give_7_3_should_be_win(self):
+        a, b = 7, 3
+        answer = pk.WIN
+        self._helpper_assert(a, b, answer)
+
+    def test_give_14_14_should_be_draw(self):
+        a, b = 14, 14
+        answer = pk.DRAW
+        self._helpper_assert(a, b, answer)
+
+
 class CardScoreTest(unittest.TestCase):
 
     def _helpper_assert(self, card, answer):
