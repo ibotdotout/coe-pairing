@@ -67,10 +67,10 @@ class CompareCardTest(unittest.TestCase):
         self._helpper_assert(a, b, answer)
 
 
-class IsPlayer1WinTest(unittest.TestCase):
+class VersusTest(unittest.TestCase):
 
     def _helpper_assert(self, a, b, answer):
-        result = pk.is_player1_win(a, b)
+        result = pk.versus(a, b)
         self.assertEqual(result, answer)
 
     def test_give_3_7_should_be_lose(self):
