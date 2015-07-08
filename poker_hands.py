@@ -8,7 +8,7 @@ WIN, DRAW, LOSE = range(3)
 # Integration method
 def highcards_compare(player1, player2):
     results = (compare(a, b) for a, b in reversed(list(zip(player1, player2))))
-    return is_p1_win(results) + 1
+    return is_p1_win(results)
 
 # Unit method
 
