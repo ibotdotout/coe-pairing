@@ -5,15 +5,24 @@
 WIN, DRAW, LOSE = range(3)
 
 
+# Integration method
 def highcards_compare(player1, player2):
-    for a, b in reversed(zip(player1, player2)):
-        result = compare(a, b)
+    results = (compare(a, b) for a, b in reversed(list(zip(player1, player2))))
+    return is_p1_win(results) + 1
+
+# Unit method
+
+
+def is_p1_win(results):
+    for i in results:
+        result = i
         if result is not DRAW:
             break
     return result
 
-
 # Integration method
+
+
 def compare(a, b):
     score_a, score_b = (get_card_score(i) for i in [a, b])
     return versus(score_a, score_b)
@@ -28,6 +37,8 @@ def versus(score_a, score_b):
     elif score_a == score_b:
         answer = DRAW
     return answer
+
+# Unit method
 
 
 def get_card_score(card):

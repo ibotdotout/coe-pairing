@@ -8,7 +8,6 @@ class PokerHandsTest(unittest.TestCase):
     pass
 
 
-@unittest.skip('')
 class CompareHighRankCardsTest(unittest.TestCase):
 
     def _helpper_assert(self, player1, player2, answer):
@@ -43,6 +42,38 @@ class CompareHighRankCardsTest(unittest.TestCase):
         player2 = ["AH"] * 5
         answer = pk.LOSE
         self._helpper_assert(player1, player2, answer)
+
+
+class IsP1WinTest(unittest.TestCase):
+
+    def _helpper_assert(self, versus_results, answer):
+        result = pk.is_p1_win(versus_results)
+        self.assertEqual(result, answer)
+
+    def test_all_draw_should_be_draw(self):
+        versus_results = [pk.DRAW] * 5
+        answer = pk.DRAW
+        self._helpper_assert(versus_results, answer)
+
+    def test_win_in_first_card_should_be_win(self):
+        versus_results = [pk.WIN] + [pk.DRAW] * 4
+        answer = pk.WIN
+        self._helpper_assert(versus_results, answer)
+
+    def test_lose_in_first_card_should_be_lose(self):
+        versus_results = [pk.LOSE] + [pk.DRAW] * 4
+        answer = pk.LOSE
+        self._helpper_assert(versus_results, answer)
+
+    def test_lose_in_second_card_should_be_lose(self):
+        versus_results = [pk.DRAW, pk.LOSE] + [pk.DRAW] * 3
+        answer = pk.LOSE
+        self._helpper_assert(versus_results, answer)
+
+    def test_lose_in_third_card_should_be_lose(self):
+        versus_results = [pk.DRAW] * 2 + [pk.LOSE] * 3
+        answer = pk.LOSE
+        self._helpper_assert(versus_results, answer)
 
 
 class CompareCardTest(unittest.TestCase):
