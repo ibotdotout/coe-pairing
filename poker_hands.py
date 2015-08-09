@@ -1,8 +1,8 @@
 # http://www.codingdojo.org/cgi-bin/index.pl?KataPokerHands
 
-
-# enum
-WIN, DRAW, LOSE = range(3)
+from enum import Enum
+RESULTS = Enum('RESULTS', 'WIN DRAW LOSE')
+# WIN, DRAW, LOSE = range(3)
 
 
 # Integration method
@@ -16,7 +16,7 @@ def highcards_compare(player1, player2):
 def is_p1_win(results):
     for i in results:
         result = i
-        if result is not DRAW:
+        if result is not RESULTS.DRAW:
             break
     return result
 
@@ -31,11 +31,14 @@ def compare(a, b):
 
 
 def versus(score_a, score_b):
-    answer = LOSE
+    # answer = LOSE
+    answer = RESULTS.LOSE
     if score_a > score_b:
-        answer = WIN
+        # answer = WIN
+        answer = RESULTS.WIN
     elif score_a == score_b:
-        answer = DRAW
+        # answer = DRAW
+        answer = RESULTS.DRAW
     return answer
 
 # Unit method
