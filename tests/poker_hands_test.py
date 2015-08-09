@@ -8,6 +8,24 @@ class PokerHandsTest(unittest.TestCase):
     pass
 
 
+class CompareOnePairCardsTest(unittest.TestCase):
+
+    def test_check_have_one_pair(self):
+        cards = ["2H"] * 2 + ["1C", "3C", "4C"]
+        answer = pk.check_one_pair(cards)
+        self.assertEqual(True, answer)
+
+    def test_check_dont_have_one_pair(self):
+        cards = ["1C", "2C", "3C", "4C", "5H"]
+        answer = pk.check_one_pair(cards)
+        self.assertEqual(False, answer)
+
+    def test_check_have_two_pair(self):
+        cards = ["2H"] * 2 + ["1C"] * 2 + ["2C"]
+        answer = pk.check_one_pair(cards)
+        self.assertEqual(False, answer)
+
+
 class CompareHighRankCardsTest(unittest.TestCase):
 
     def _helpper_assert(self, player1, player2, answer):
@@ -15,7 +33,7 @@ class CompareHighRankCardsTest(unittest.TestCase):
         self.assertEqual(result, answer)
 
     def test_same_player_should_be_draw(self):
-        player1 = ["2H"] * 5
+        player1 = ["2H"] * 5 + []
         answer = pk.RESULTS.DRAW
         self._helpper_assert(player1, player1, answer)
 

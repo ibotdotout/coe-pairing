@@ -48,3 +48,11 @@ def get_card_score(card):
     first_letter = card[0]
     score_table = [str(i) for i in range(2, 10)] + ['T', 'J', 'Q', 'K', 'A']
     return score_table.index(first_letter) + 2
+
+
+def check_one_pair(cards):
+    check = False
+    for c in cards:
+        if cards.count(c) is 2:
+            check = True
+    return check
