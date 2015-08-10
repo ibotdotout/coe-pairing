@@ -10,18 +10,33 @@ class PokerHandsTest(unittest.TestCase):
 
 class CompareOnePairCardsTest(unittest.TestCase):
 
-    def test_check_have_one_pair(self):
-        cards = ["2H"] * 2 + ["1C", "3C", "4C"]
+    def test_check_have_one_pair_should_true(self):
+        cards = ["2H", "2D"] + ["AC", "3C", "4C"]
         answer = pk.check_one_pair(cards)
         self.assertEqual(True, answer)
 
-    def test_check_dont_have_one_pair(self):
-        cards = ["1C", "2C", "3C", "4C", "5H"]
+    def test_check_have_one_pair2_should_true(self):
+        cards = ["AH", "2D"] + ["2C", "3C", "4C"]
+        answer = pk.check_one_pair(cards)
+        self.assertEqual(True, answer)
+
+    def test_check_dont_have_one_pair_should_false(self):
+        cards = ["AC", "2C", "3C", "4C", "5H"]
         answer = pk.check_one_pair(cards)
         self.assertEqual(False, answer)
 
-    def test_check_have_two_pair(self):
-        cards = ["2H"] * 2 + ["1C"] * 2 + ["2C"]
+    def test_three_of_kind_should_false(self):
+        cards = ["AC", "AD", "AH", "4C", "5H"]
+        answer = pk.check_one_pair(cards)
+        self.assertEqual(False, answer)
+
+    def test_three_of_kind2_should_false(self):
+        cards = ["AC", "AD", "4H", "AC", "5H"]
+        answer = pk.check_one_pair(cards)
+        self.assertEqual(False, answer)
+
+    def test_check_have_two_should_false(self):
+        cards = ["2H", "2D"] + ["AC", "AD", "2C"]
         answer = pk.check_one_pair(cards)
         self.assertEqual(False, answer)
 

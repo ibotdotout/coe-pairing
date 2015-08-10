@@ -52,7 +52,7 @@ def get_card_score(card):
 
 def check_one_pair(cards):
     check = False
-    for c in cards:
-        if cards.count(c) is 2:
-            check = True
+    cards_number = [i[0] for i in cards]
+    if len(set(cards_number)) == 4:
+        check = True
     return check
