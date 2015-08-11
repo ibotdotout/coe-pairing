@@ -50,9 +50,14 @@ def get_card_score(card):
     return score_table.index(first_letter) + 2
 
 
-def check_one_pair(cards):
-    check = False
+def get_set_number_of_cards(cards):
     cards_number = [i[0] for i in cards]
-    if len(set(cards_number)) == 4:
-        check = True
-    return check
+    return len(set(cards_number))
+
+
+def check_one_pair(cards):
+    return get_set_number_of_cards(cards) == 4
+
+
+def check_two_pair(cards):
+    return get_set_number_of_cards(cards) == 3

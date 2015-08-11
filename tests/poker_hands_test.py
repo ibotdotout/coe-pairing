@@ -8,6 +8,39 @@ class PokerHandsTest(unittest.TestCase):
     pass
 
 
+class CompareTwoPairCardsTest(unittest.TestCase):
+
+    def test_check_have_two_pair_should_true(self):
+        cards = ["2H", "2D"] + ["3H", "3C", "4C"]
+        answer = pk.check_two_pair(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_one_pair_should_false(self):
+        cards = ["2H", "2D"] + ["7H", "3C", "4C"]
+        answer = pk.check_two_pair(cards)
+        self.assertEqual(False, answer)
+
+    def test_check_have_two_pair2_should_true(self):
+        cards = ["2H", "2D"] + ["3H", "4C", "3C"]
+        answer = pk.check_two_pair(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_four_of_kind_should_false(self):
+        cards = ["2H", "2D", "2C", "2S", "3C"]
+        answer = pk.check_two_pair(cards)
+        self.assertEqual(False, answer)
+
+    def test_give_full_house_should_false(self):
+        cards = ["2H", "2D", "3C", "3C", "3S"]
+        answer = pk.check_two_pair(cards)
+        self.assertEqual(False, answer)
+
+    def test_three_of_kind_should_false(self):
+        cards = ["AC", "AD", "AH", "4C", "5H"]
+        answer = pk.check_two_pair(cards)
+        self.assertEqual(False, answer)
+
+
 class CompareOnePairCardsTest(unittest.TestCase):
 
     def test_check_have_one_pair_should_true(self):
