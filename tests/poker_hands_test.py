@@ -8,7 +8,83 @@ class PokerHandsTest(unittest.TestCase):
     pass
 
 
-class CompareTwoPairCardsTest(unittest.TestCase):
+class CheckStraightTest(unittest.TestCase):
+
+    def test_give_straight_flush_should_false(self):
+        cards = ["TC", "JC", "QC", "KC", "AC"]
+        answer = pk.check_straight(cards)
+        self.assertEqual(False, answer)
+
+    def test_give_10_J_Q_K_A_should_ture(self):
+        cards = ["TC", "JD", "QH", "KC", "AH"]
+        answer = pk.check_straight(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_2_to_6_should_true(self):
+        cards = ["2C", "3D", "4H", "5C", "6H"]
+        answer = pk.check_straight(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_7_to_3_should_true(self):
+        cards = ["7C", "6C", "5H", "4C", "3H"]
+        answer = pk.check_straight(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_3_3_7_7_7_should_false(self):
+        cards = ["3C", "3D", "7H", "7C", "7S"]
+        answer = pk.check_straight(cards)
+        self.assertEqual(False, answer)
+
+    def test_give_3_7_7_7_7_should_false(self):
+        cards = ["3C", "7D", "7H", "7C", "7S"]
+        answer = pk.check_straight(cards)
+        self.assertEqual(False, answer)
+
+    def test_give_3_to_7_should_true(self):
+        cards = ["3C", "4D", "5H", "6C", "7H"]
+        answer = pk.check_straight(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_2_to_5_and_7_should_false(self):
+        cards = ["2C", "3D", "4H", "5C", "7H"]
+        answer = pk.check_straight(cards)
+        self.assertEqual(False, answer)
+
+
+class CheckThreeOfKindTest(unittest.TestCase):
+
+    def test_three_of_kind_should_true(self):
+        cards = ["AC", "AD", "AH", "4C", "5H"]
+        answer = pk.check_three_of_kind(cards)
+        self.assertEqual(True, answer)
+
+    def test_three_of_kind2_should_true(self):
+        cards = ["AC", "AD", "4H", "AC", "5H"]
+        answer = pk.check_three_of_kind(cards)
+        self.assertEqual(True, answer)
+
+    def test_three_of_kind3_should_true(self):
+        cards = ["2C", "2D", "4H", "2C", "5H"]
+        answer = pk.check_three_of_kind(cards)
+        self.assertEqual(True, answer)
+
+    def test_check_have_two_pair_should_false(self):
+        cards = ["2H", "2D"] + ["3H", "3C", "4C"]
+        answer = pk.check_three_of_kind(cards)
+        self.assertEqual(False, answer)
+
+    def test_give_full_house_should_false(self):
+        cards = ["2H", "2D", "3C", "3C", "3S"]
+        answer = pk.check_three_of_kind(cards)
+        self.assertEqual(False, answer)
+
+    def test_give_full_house2_should_false(self):
+        cards = ["3C", "3C", "3S", "4H", "4D"]
+        answer = pk.check_three_of_kind(cards)
+        self.assertEqual(False, answer)
+
+
+class CheckTwoPairCardsTest(unittest.TestCase):
 
     def test_check_have_two_pair_should_true(self):
         cards = ["2H", "2D"] + ["3H", "3C", "4C"]
@@ -41,7 +117,7 @@ class CompareTwoPairCardsTest(unittest.TestCase):
         self.assertEqual(False, answer)
 
 
-class CompareOnePairCardsTest(unittest.TestCase):
+class CheckOnePairCardsTest(unittest.TestCase):
 
     def test_check_have_one_pair_should_true(self):
         cards = ["2H", "2D"] + ["AC", "3C", "4C"]

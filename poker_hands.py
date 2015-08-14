@@ -52,12 +52,28 @@ def get_card_score(card):
 
 def get_set_number_of_cards(cards):
     cards_number = [i[0] for i in cards]
-    return len(set(cards_number))
+    set_cards = set(cards_number)
+    return [cards_number.count(i) for i in set_cards]
 
 
 def check_one_pair(cards):
-    return get_set_number_of_cards(cards) == 4
+    return len(get_set_number_of_cards(cards)) == 4
 
 
 def check_two_pair(cards):
-    return get_set_number_of_cards(cards) == 3
+    count = sorted(get_set_number_of_cards(cards))
+    return len(count) == 3 and count == [1, 2, 2]
+
+
+def check_three_of_kind(cards):
+    count = sorted(get_set_number_of_cards(cards))
+    return len(count) == 3 and count == [1, 1, 3]
+
+
+def check_straight(cards):
+    sorted_cards = sorted([get_card_score(i) for i in cards])
+    set_suit_cards = {i[1] for i in cards}
+    is_consecutive = sorted_cards[4] - sorted_cards[0] == 4
+    is_distinct = len(set(sorted_cards)) == 5
+    is_not_flush = len(set_suit_cards) != 1
+    return is_consecutive and is_distinct and is_not_flush
