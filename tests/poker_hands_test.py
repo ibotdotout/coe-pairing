@@ -8,46 +8,102 @@ class PokerHandsTest(unittest.TestCase):
     pass
 
 
+class CheckStraightFlushTest(unittest.TestCase):
+
+    def test_give_straight_flush_should_true(self):
+        cards = ["TC", "JC", "QC", "KC", "AC"]
+        answer = pk.is_straight_flush_rank(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_flush_should_flash(self):
+        cards = ["5C", "4C", "QC", "KC", "AC"]
+        answer = pk.is_straight_flush_rank(cards)
+        self.assertEqual(False, answer)
+
+    def test_give_straight_should_flash(self):
+        cards = ["TC", "JD", "QH", "KC", "AH"]
+        answer = pk.is_straight_flush_rank(cards)
+        self.assertEqual(False, answer)
+
+
+class CheckFlushTest(unittest.TestCase):
+
+    def test_give_C_C_C_C_C_should_true(self):
+        cards = ["5C", "4C", "QC", "KC", "AC"]
+        answer = pk.is_flush_rank(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_D_D_D_D_D_should_true(self):
+        cards = ["5D", "4D", "QD", "KD", "AD"]
+        answer = pk.is_flush_rank(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_H_H_H_H_H_should_true(self):
+        cards = ["5H", "4H", "QH", "KH", "AH"]
+        answer = pk.is_flush_rank(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_S_S_S_S_S_should_true(self):
+        cards = ["5S", "4S", "QS", "KS", "AS"]
+        answer = pk.is_flush_rank(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_C_C_C_C_H_should_false(self):
+        cards = ["5C", "4C", "QC", "KC", "AH"]
+        answer = pk.is_flush_rank(cards)
+        self.assertEqual(False, answer)
+
+    def test_give_C_C_D_C_D_should_false(self):
+        cards = ["5C", "4C", "QD", "KC", "AD"]
+        answer = pk.is_flush_rank(cards)
+        self.assertEqual(False, answer)
+
+    def test_give_straight_flush_should_false(self):
+        cards = ["TC", "JC", "QC", "KC", "AC"]
+        answer = pk.is_flush_rank(cards)
+        self.assertEqual(False, answer)
+
+
 class CheckStraightTest(unittest.TestCase):
 
     def test_give_straight_flush_should_false(self):
         cards = ["TC", "JC", "QC", "KC", "AC"]
-        answer = pk.check_straight(cards)
+        answer = pk.is_straight_rank(cards)
         self.assertEqual(False, answer)
 
     def test_give_10_J_Q_K_A_should_ture(self):
         cards = ["TC", "JD", "QH", "KC", "AH"]
-        answer = pk.check_straight(cards)
+        answer = pk.is_straight_rank(cards)
         self.assertEqual(True, answer)
 
     def test_give_2_to_6_should_true(self):
         cards = ["2C", "3D", "4H", "5C", "6H"]
-        answer = pk.check_straight(cards)
+        answer = pk.is_straight_rank(cards)
         self.assertEqual(True, answer)
 
     def test_give_7_to_3_should_true(self):
         cards = ["7C", "6C", "5H", "4C", "3H"]
-        answer = pk.check_straight(cards)
+        answer = pk.is_straight_rank(cards)
         self.assertEqual(True, answer)
 
     def test_give_3_3_7_7_7_should_false(self):
         cards = ["3C", "3D", "7H", "7C", "7S"]
-        answer = pk.check_straight(cards)
+        answer = pk.is_straight_rank(cards)
         self.assertEqual(False, answer)
 
     def test_give_3_7_7_7_7_should_false(self):
         cards = ["3C", "7D", "7H", "7C", "7S"]
-        answer = pk.check_straight(cards)
+        answer = pk.is_straight_rank(cards)
         self.assertEqual(False, answer)
 
     def test_give_3_to_7_should_true(self):
         cards = ["3C", "4D", "5H", "6C", "7H"]
-        answer = pk.check_straight(cards)
+        answer = pk.is_straight_rank(cards)
         self.assertEqual(True, answer)
 
     def test_give_2_to_5_and_7_should_false(self):
         cards = ["2C", "3D", "4H", "5C", "7H"]
-        answer = pk.check_straight(cards)
+        answer = pk.is_straight_rank(cards)
         self.assertEqual(False, answer)
 
 

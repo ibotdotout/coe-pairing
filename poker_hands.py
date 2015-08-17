@@ -27,6 +27,19 @@ def compare(a, b):
     score_a, score_b = (get_card_score(i) for i in [a, b])
     return versus(score_a, score_b)
 
+
+def is_straight_rank(cards):
+    return check_straight(cards) and not check_flush(cards)
+
+
+def is_flush_rank(cards):
+    return not check_straight(cards) and check_flush(cards)
+
+
+def is_straight_flush_rank(cards):
+    return check_straight(cards) and check_flush(cards)
+
+
 # Unit method
 
 
@@ -72,8 +85,11 @@ def check_three_of_kind(cards):
 
 def check_straight(cards):
     sorted_cards = sorted([get_card_score(i) for i in cards])
-    set_suit_cards = {i[1] for i in cards}
     is_consecutive = sorted_cards[4] - sorted_cards[0] == 4
     is_distinct = len(set(sorted_cards)) == 5
-    is_not_flush = len(set_suit_cards) != 1
-    return is_consecutive and is_distinct and is_not_flush
+    return is_consecutive and is_distinct
+
+
+def check_flush(cards):
+    set_suit_cards = {i[1] for i in cards}
+    return len(set_suit_cards) == 1
