@@ -8,6 +8,47 @@ class PokerHandsTest(unittest.TestCase):
     pass
 
 
+class CheckFourOfKindTest(unittest.TestCase):
+
+    def test_give_T_T_T_T_A_shoud_true(self):
+        cards = ["TC", "TD", "TH", "TS", "AH"]
+        answer = pk.check_four_of_kind(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_full_house_should_false(self):
+        cards = ["TC", "TD", "TH", "AC", "AH"]
+        answer = pk.check_four_of_kind(cards)
+        self.assertEqual(False, answer)
+
+
+class CheckFullHouseTest(unittest.TestCase):
+
+    def test_give_T_T_T_A_A_shoud_true(self):
+        cards = ["TC", "TD", "TH", "AC", "AH"]
+        answer = pk.check_full_house(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_T_T_T_J_Q_should_false(self):
+        cards = ["TC", "TD", "TH", "JC", "QH"]
+        answer = pk.check_full_house(cards)
+        self.assertEqual(False, answer)
+
+    def test_give_A_T_T_T_A_shoud_true(self):
+        cards = ["AC", "TD", "TH", "TC", "AH"]
+        answer = pk.check_full_house(cards)
+        self.assertEqual(True, answer)
+
+    def test_give_three_of_kind_should_false(self):
+        cards = ["AC", "AD", "4C", "5H", "AH"]
+        answer = pk.check_full_house(cards)
+        self.assertEqual(False, answer)
+
+    def test_give_four_of_kind_shoud_false(self):
+        cards = ["TC", "TD", "TH", "TS", "AH"]
+        answer = pk.check_full_house(cards)
+        self.assertEqual(False, answer)
+
+
 class CheckStraightFlushTest(unittest.TestCase):
 
     def test_give_straight_flush_should_true(self):

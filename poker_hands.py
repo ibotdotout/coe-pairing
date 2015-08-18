@@ -93,3 +93,13 @@ def check_straight(cards):
 def check_flush(cards):
     set_suit_cards = {i[1] for i in cards}
     return len(set_suit_cards) == 1
+
+
+def check_full_house(cards):
+    count = sorted(get_set_number_of_cards(cards))
+    return len(count) == 2 and count == [2, 3]
+
+
+def check_four_of_kind(cards):
+    count = sorted(get_set_number_of_cards(cards))
+    return len(count) == 2 and count == [1, 4]
