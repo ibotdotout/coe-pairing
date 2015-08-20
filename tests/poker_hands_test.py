@@ -8,6 +8,49 @@ class PokerHandsTest(unittest.TestCase):
     pass
 
 
+class AskRankScoreTest(unittest.TestCase):
+
+    def _helper_assert(self, rank, expected_answer):
+        answer = pk.ask_rank_score(rank)
+        self.assertEqual(expected_answer, answer)
+
+    def test_give_high_card_should_be_0(self):
+        rank = 'high card'
+        self._helper_assert(rank, 0)
+
+    def test_give_pair_should_be_1(self):
+        rank = 'pair'
+        self._helper_assert(rank, 1)
+
+    def test_give_two_pairs_should_be_2(self):
+        rank = 'two pairs'
+        self._helper_assert(rank, 2)
+
+    def test_give_three_of_kind_should_be_3(self):
+        rank = 'three of kind'
+        self._helper_assert(rank, 3)
+
+    def test_give_straight_should_be_4(self):
+        rank = 'straight'
+        self._helper_assert(rank, 4)
+
+    def test_give_flush_should_be_5(self):
+        rank = 'flush'
+        self._helper_assert(rank, 5)
+
+    def test_give_full_house_should_be_6(self):
+        rank = 'full house'
+        self._helper_assert(rank, 6)
+
+    def test_give_four_of_kind_should_be_7(self):
+        rank = 'four of kind'
+        self._helper_assert(rank, 7)
+
+    def test_give_straight_flush_should_be_8(self):
+        rank = 'straight flush'
+        self._helper_assert(rank, 8)
+
+
 class AskRankTest(unittest.TestCase):
 
     def test_give_T_T_T_A_A_shoud_be_full_house(self):

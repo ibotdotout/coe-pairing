@@ -32,6 +32,21 @@ def ask_rank(cards):
     return result
 
 
+def ask_rank_score(rank):
+    rank_score = {
+        'high card': 0,
+        'pair': 1,
+        'two pairs': 2,
+        'three of kind': 3,
+        'straight': 4,
+        'flush': 5,
+        'full house': 6,
+        'four of kind': 7,
+        'straight flush': 8
+    }
+    return rank_score.get(rank, 0)
+
+
 # Unit method
 def is_p1_win(results):
     for i in results:
