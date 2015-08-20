@@ -10,9 +10,29 @@ def highcards_compare(player1, player2):
     results = (compare(a, b) for a, b in reversed(list(zip(player1, player2))))
     return is_p1_win(results)
 
+
+def ask_rank(cards):
+    rule_ranks = [
+        (is_straight_flush_rank, 'straight flush'),
+        (check_four_of_kind, 'four of kind'),
+        (check_full_house, 'full house'),
+        (check_flush, 'flush'),
+        (is_straight_rank, 'straight'),
+        (check_three_of_kind, 'three of kind'),
+        (check_two_pairs, 'two pairs'),
+        (check_one_pair, 'pair'),
+    ]
+
+    result = 'high card'
+    for rule, rank in rule_ranks:
+        if rule(cards):
+            result = rank
+            break
+
+    return result
+
+
 # Unit method
-
-
 def is_p1_win(results):
     for i in results:
         result = i
@@ -20,9 +40,8 @@ def is_p1_win(results):
             break
     return result
 
+
 # Integration method
-
-
 def compare(a, b):
     score_a, score_b = (get_card_score(i) for i in [a, b])
     return versus(score_a, score_b)
@@ -41,8 +60,6 @@ def is_straight_flush_rank(cards):
 
 
 # Unit method
-
-
 def versus(score_a, score_b):
     # answer = LOSE
     answer = RESULTS.LOSE
@@ -54,9 +71,8 @@ def versus(score_a, score_b):
         answer = RESULTS.DRAW
     return answer
 
+
 # Unit method
-
-
 def get_card_score(card):
     first_letter = card[0]
     score_table = [str(i) for i in range(2, 10)] + ['T', 'J', 'Q', 'K', 'A']
@@ -73,7 +89,7 @@ def check_one_pair(cards):
     return len(get_set_number_of_cards(cards)) == 4
 
 
-def check_two_pair(cards):
+def check_two_pairs(cards):
     count = sorted(get_set_number_of_cards(cards))
     return len(count) == 3 and count == [1, 2, 2]
 

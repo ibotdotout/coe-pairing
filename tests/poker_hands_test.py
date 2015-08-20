@@ -8,6 +8,54 @@ class PokerHandsTest(unittest.TestCase):
     pass
 
 
+class AskRankTest(unittest.TestCase):
+
+    def test_give_T_T_T_A_A_shoud_be_full_house(self):
+        cards = ["TC", "TD", "TH", "AC", "AH"]
+        answer = pk.ask_rank(cards)
+        self.assertEqual('full house', answer)
+
+    def test_give_T_T_T_T_A_shoud_be_four_of_kind(self):
+        cards = ["TC", "TD", "TH", "TS", "AH"]
+        answer = pk.ask_rank(cards)
+        self.assertEqual('four of kind', answer)
+
+    def test_give_C_C_C_C_C_should_be_flush(self):
+        cards = ["5C", "4C", "QC", "KC", "AC"]
+        answer = pk.ask_rank(cards)
+        self.assertEqual('flush', answer)
+
+    def test_give_TC_JC_QC_KC_AC_should_be_straight_flush(self):
+        cards = ["TC", "JC", "QC", "KC", "AC"]
+        answer = pk.ask_rank(cards)
+        self.assertEqual('straight flush', answer)
+
+    def test_give_10_J_Q_K_A_should_straight(self):
+        cards = ["TC", "JD", "QH", "KC", "AH"]
+        answer = pk.ask_rank(cards)
+        self.assertEqual('straight', answer)
+
+    def test_give_T_T_T_2_A_shoud_be_three_of_kind(self):
+        cards = ["TC", "TD", "TH", "2S", "AH"]
+        answer = pk.ask_rank(cards)
+        self.assertEqual('three of kind', answer)
+
+    def test_give_2_2_3_4_3_should_be_two_pairs(self):
+        cards = ["2H", "2D", "3H", "4C", "3C"]
+        answer = pk.ask_rank(cards)
+        self.assertEqual('two pairs', answer)
+
+    def test_give_2_2_3_4_5_should_be_pair(self):
+        cards = ["2H", "2D", "3H", "4C", "5C"]
+        answer = pk.ask_rank(cards)
+        self.assertEqual('pair', answer)
+
+    def test_give_5_2_9_4_6_should_be_high_card(self):
+        cards = ["5H", "2D", "9H", "4C", "6C"]
+        answer = pk.ask_rank(cards)
+        self.assertEqual('high card', answer)
+
+
 class CheckFourOfKindTest(unittest.TestCase):
 
     def test_give_T_T_T_T_A_shoud_true(self):
@@ -185,32 +233,32 @@ class CheckTwoPairCardsTest(unittest.TestCase):
 
     def test_check_have_two_pair_should_true(self):
         cards = ["2H", "2D"] + ["3H", "3C", "4C"]
-        answer = pk.check_two_pair(cards)
+        answer = pk.check_two_pairs(cards)
         self.assertEqual(True, answer)
 
     def test_give_one_pair_should_false(self):
         cards = ["2H", "2D"] + ["7H", "3C", "4C"]
-        answer = pk.check_two_pair(cards)
+        answer = pk.check_two_pairs(cards)
         self.assertEqual(False, answer)
 
     def test_check_have_two_pair2_should_true(self):
         cards = ["2H", "2D"] + ["3H", "4C", "3C"]
-        answer = pk.check_two_pair(cards)
+        answer = pk.check_two_pairs(cards)
         self.assertEqual(True, answer)
 
     def test_give_four_of_kind_should_false(self):
         cards = ["2H", "2D", "2C", "2S", "3C"]
-        answer = pk.check_two_pair(cards)
+        answer = pk.check_two_pairs(cards)
         self.assertEqual(False, answer)
 
     def test_give_full_house_should_false(self):
         cards = ["2H", "2D", "3C", "3C", "3S"]
-        answer = pk.check_two_pair(cards)
+        answer = pk.check_two_pairs(cards)
         self.assertEqual(False, answer)
 
     def test_three_of_kind_should_false(self):
         cards = ["AC", "AD", "AH", "4C", "5H"]
-        answer = pk.check_two_pair(cards)
+        answer = pk.check_two_pairs(cards)
         self.assertEqual(False, answer)
 
 
