@@ -5,7 +5,24 @@ import unittest
 
 
 class PokerHandsTest(unittest.TestCase):
-    pass
+
+    def test_give_full_house_vs_flush_should_win(self):
+        a = ["2H", "4S", "4C", "2D", "4H"]
+        b = ["2S", "8S", "AS", "QS", "3S"]
+        result = pk.compare(a, b)
+        self.assertEqual(pk.RESULTS.WIN, result)
+
+    def test_give_same_rank_value_should_draw(self):
+        a = ["2H", "4S", "4C", "2D", "4H"]
+        b = ["2S", "4D", "4C", "2D", "4H"]
+        result = pk.compare(a, b)
+        self.assertEqual(pk.RESULTS.DRAW, result)
+
+    def test_give_same_rank_not_same_value_should_lose(self):
+        a = ["2H", "4S", "4C", "2D", "4H"]
+        b = ["9S", "4D", "4C", "9D", "4H"]
+        result = pk.compare(a, b)
+        self.assertEqual(pk.RESULTS.LOSE, result)
 
 
 class AskRankScoreTest(unittest.TestCase):
@@ -338,6 +355,7 @@ class CheckOnePairCardsTest(unittest.TestCase):
         self.assertEqual(False, answer)
 
 
+@unittest.skip('')
 class CompareHighRankCardsTest(unittest.TestCase):
 
     def _helpper_assert(self, player1, player2, answer):
@@ -372,83 +390,6 @@ class CompareHighRankCardsTest(unittest.TestCase):
         player2 = ["AH"] * 5
         answer = pk.RESULTS.LOSE
         self._helpper_assert(player1, player2, answer)
-
-
-class IsP1WinTest(unittest.TestCase):
-
-    def _helpper_assert(self, versus_results, answer):
-        result = pk.is_p1_win(versus_results)
-        self.assertEqual(result, answer)
-
-    def test_all_draw_should_be_draw(self):
-        versus_results = [pk.RESULTS.DRAW] * 5
-        answer = pk.RESULTS.DRAW
-        self._helpper_assert(versus_results, answer)
-
-    def test_win_in_first_card_should_be_win(self):
-        versus_results = [pk.RESULTS.WIN] + [pk.RESULTS.DRAW] * 4
-        answer = pk.RESULTS.WIN
-        self._helpper_assert(versus_results, answer)
-
-    def test_lose_in_first_card_should_be_lose(self):
-        versus_results = [pk.RESULTS.LOSE] + [pk.RESULTS.DRAW] * 4
-        answer = pk.RESULTS.LOSE
-        self._helpper_assert(versus_results, answer)
-
-    def test_lose_in_second_card_should_be_lose(self):
-        versus_results = [
-            pk.RESULTS.DRAW, pk.RESULTS.LOSE] + [pk.RESULTS.DRAW] * 3
-        answer = pk.RESULTS.LOSE
-        self._helpper_assert(versus_results, answer)
-
-    def test_lose_in_third_card_should_be_lose(self):
-        versus_results = [pk.RESULTS.DRAW] * 2 + [pk.RESULTS.LOSE] * 3
-        answer = pk.RESULTS.LOSE
-        self._helpper_assert(versus_results, answer)
-
-
-class CompareCardTest(unittest.TestCase):
-
-    def _helpper_assert(self, a, b, answer):
-        result = pk.compare(a, b)
-        self.assertEqual(result, answer)
-
-    def test_give_3C_7D_should_be_lose(self):
-        a, b = "3C", "7D"
-        answer = pk.RESULTS.LOSE
-        self._helpper_assert(a, b, answer)
-
-    def test_give_7D_3C_should_be_win(self):
-        a, b = "7D", "3C"
-        answer = pk.RESULTS.WIN
-        self._helpper_assert(a, b, answer)
-
-    def test_give_AD_AC_should_be_draw(self):
-        a, b = "AD", "AC"
-        answer = pk.RESULTS.DRAW
-        self._helpper_assert(a, b, answer)
-
-
-class VersusTest(unittest.TestCase):
-
-    def _helpper_assert(self, a, b, answer):
-        result = pk.versus(a, b)
-        self.assertEqual(result, answer)
-
-    def test_give_3_7_should_be_lose(self):
-        a, b = 3, 7
-        answer = pk.RESULTS.LOSE
-        self._helpper_assert(a, b, answer)
-
-    def test_give_7_3_should_be_win(self):
-        a, b = 7, 3
-        answer = pk.RESULTS.WIN
-        self._helpper_assert(a, b, answer)
-
-    def test_give_14_14_should_be_draw(self):
-        a, b = 14, 14
-        answer = pk.RESULTS.DRAW
-        self._helpper_assert(a, b, answer)
 
 
 class CardScoreTest(unittest.TestCase):

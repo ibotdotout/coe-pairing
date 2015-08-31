@@ -5,12 +5,24 @@ RESULTS = Enum('RESULTS', 'WIN DRAW LOSE')
 # WIN, DRAW, LOSE = range(3)
 
 
-# Integration method
-def highcards_compare(player1, player2):
-    results = (compare(a, b) for a, b in reversed(list(zip(player1, player2))))
-    return is_p1_win(results)
+# Compare
+def compare(a, b):
+
+    def get_score(x):
+        return ask_rank_score(ask_rank(x))
+
+    result = RESULTS.LOSE
+    score_a = get_score(a)
+    score_b = get_score(b)
+
+    if score_a > score_b:
+        result = RESULTS.WIN
+    elif score_a == score_b:
+        result = RESULTS.DRAW
+    return result
 
 
+# Score
 def ask_rank(cards):
     rule_ranks = [
         (is_straight_flush_rank, 'straight flush'),
@@ -47,21 +59,7 @@ def ask_rank_score(rank):
     return rank_score.get(rank, 0)
 
 
-# Unit method
-def is_p1_win(results):
-    for i in results:
-        result = i
-        if result is not RESULTS.DRAW:
-            break
-    return result
-
-
 # Integration method
-def compare(a, b):
-    score_a, score_b = (get_card_score(i) for i in [a, b])
-    return versus(score_a, score_b)
-
-
 def is_straight_rank(cards):
     return check_straight(cards) and not check_flush(cards)
 
@@ -72,19 +70,6 @@ def is_flush_rank(cards):
 
 def is_straight_flush_rank(cards):
     return check_straight(cards) and check_flush(cards)
-
-
-# Unit method
-def versus(score_a, score_b):
-    # answer = LOSE
-    answer = RESULTS.LOSE
-    if score_a > score_b:
-        # answer = WIN
-        answer = RESULTS.WIN
-    elif score_a == score_b:
-        # answer = DRAW
-        answer = RESULTS.DRAW
-    return answer
 
 
 # Unit method
