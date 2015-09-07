@@ -25,6 +25,19 @@ class PokerHandsTest(unittest.TestCase):
         self.assertEqual(pk.RESULTS.LOSE, result)
 
 
+class GetValueCardTest(unittest.TestCase):
+
+    def test_give_9_9_9_A_2_should_9_14_2(self):
+        a = ["9H", "9S", "9C", "AD", "2H"]
+        result = pk.get_value_card(a)
+        self.assertEqual([9, 14, 2], result)
+
+    def test_give_9_9_A_A_2_should_14_9_2(self):
+        a = ["9H", "9S", "AC", "AD", "2H"]
+        result = pk.get_value_card(a)
+        self.assertEqual([14, 9, 2], result)
+
+
 class AskRankScoreTest(unittest.TestCase):
 
     def _helper_assert(self, rank, expected_answer):

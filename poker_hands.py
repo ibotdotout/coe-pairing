@@ -18,8 +18,22 @@ def compare(a, b):
     if score_a > score_b:
         result = RESULTS.WIN
     elif score_a == score_b:
-        result = RESULTS.DRAW
+        value_a = get_value_card(a)
+        value_b = get_value_card(b)
+        for i, j in zip(value_a, value_b):
+            if i != j:
+                result = RESULTS.WiN if i > j else RESULTS.LOSE
+                break
+        else:
+            result = RESULTS.DRAW
     return result
+
+
+def get_value_card(a):
+    a = [get_card_score(i) for i in a]
+    count = sorted([(a.count(i), i) for i in set(a)], reverse=True)
+    values = [i[1] for i in count]
+    return values
 
 
 # Score
