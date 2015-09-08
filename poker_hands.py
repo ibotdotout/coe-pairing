@@ -5,6 +5,33 @@ RESULTS = Enum('RESULTS', 'WIN DRAW LOSE')
 # WIN, DRAW, LOSE = range(3)
 
 
+def poker_hands(a, b):
+    result = compare(a, b)
+
+    rank_a = ask_rank(a)
+    rank_b = ask_rank(b)
+
+    card_a = get_value_card(a)
+    card_b = get_value_card(b)
+
+    win_card = None
+    win_rank = None
+
+    if result != RESULTS.DRAW:
+        win_rank = rank_a if RESULTS.WIN else rank_b
+        if rank_a == rank_b:
+            for i, j in zip(card_a, card_b):
+                if i != j:
+                    win_card = i if i > j else j
+                    break
+
+            card = [str(i)
+                    for i in range(11)] + ['Jack', 'Queen', 'King', 'Ace']
+            win_card = card[win_card]
+
+    return (result, win_rank, win_card)
+
+
 # Compare
 def compare(a, b):
 
@@ -22,7 +49,7 @@ def compare(a, b):
         value_b = get_value_card(b)
         for i, j in zip(value_a, value_b):
             if i != j:
-                result = RESULTS.WiN if i > j else RESULTS.LOSE
+                result = RESULTS.WIN if i > j else RESULTS.LOSE
                 break
         else:
             result = RESULTS.DRAW

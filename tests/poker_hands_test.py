@@ -6,6 +6,33 @@ import unittest
 
 class PokerHandsTest(unittest.TestCase):
 
+    def test_case_1_should_lose_high_card_ace(self):
+        a = ["2H", "3D", "5S", "9C", "KD"]
+        b = ["2C", "3H", "4S", "8C", "AH"]
+        result = pk.poker_hands(a, b)
+        self.assertEqual((pk.RESULTS.LOSE, "high card", 'Ace'), result)
+
+    def test_case_2_should_win_full_house(self):
+        a = ["2H", "4S", "4C", "2D", "4H"]
+        b = ["2S", "8S", "AS", "QS", "3S"]
+        result = pk.poker_hands(a, b)
+        self.assertEqual((pk.RESULTS.WIN, "full house", None), result)
+
+    def test_case_3_should_win_high_card_9(self):
+        a = ["2H", "3D", "5S", "9C", "KD"]
+        b = ["2C", "3H", "4S", "8C", "KH"]
+        result = pk.poker_hands(a, b)
+        self.assertEqual((pk.RESULTS.WIN, "high card", '9'), result)
+
+    def test_case_4_shoud_tie(self):
+        a = ["2H", "3D", "5S", "9C", "KD"]
+        b = ["2D", "3H", "5C", "9S", "KH"]
+        result = pk.poker_hands(a, b)
+        self.assertEqual((pk.RESULTS.DRAW, None, None), result)
+
+
+class CompareTest(unittest.TestCase):
+
     def test_give_full_house_vs_flush_should_win(self):
         a = ["2H", "4S", "4C", "2D", "4H"]
         b = ["2S", "8S", "AS", "QS", "3S"]
@@ -366,43 +393,6 @@ class CheckOnePairCardsTest(unittest.TestCase):
         cards = ["2H", "2D"] + ["AC", "AD", "2C"]
         answer = pk.check_one_pair(cards)
         self.assertEqual(False, answer)
-
-
-@unittest.skip('')
-class CompareHighRankCardsTest(unittest.TestCase):
-
-    def _helpper_assert(self, player1, player2, answer):
-        result = pk.highcards_compare(player1, player2)
-        self.assertEqual(result, answer)
-
-    def test_same_player_should_be_draw(self):
-        player1 = ["2H"] * 5 + []
-        answer = pk.RESULTS.DRAW
-        self._helpper_assert(player1, player1, answer)
-
-    def test_win_in_first_card_should_be_win(self):
-        player1 = ["7H"] * 5
-        player2 = ["2H"] * 5
-        answer = pk.RESULTS.WIN
-        self._helpper_assert(player1, player2, answer)
-
-    def test_lose_in_first_card_should_be_lose(self):
-        player1 = ["2H"] * 5
-        player2 = ["3H"] * 5
-        answer = pk.RESULTS.LOSE
-        self._helpper_assert(player1, player2, answer)
-
-    def test_lose_in_second_card_should_be_lose(self):
-        player1 = ["2H"] * 4 + ["3H"]
-        player2 = ["3H"] * 5
-        answer = pk.RESULTS.LOSE
-        self._helpper_assert(player1, player2, answer)
-
-    def test_lose_in_third_card_should_be_lose(self):
-        player1 = ["3H"] * 3 + ["AH"] * 2
-        player2 = ["AH"] * 5
-        answer = pk.RESULTS.LOSE
-        self._helpper_assert(player1, player2, answer)
 
 
 class CardScoreTest(unittest.TestCase):
