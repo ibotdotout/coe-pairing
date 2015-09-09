@@ -31,27 +31,6 @@ class PokerHandsTest(unittest.TestCase):
         self.assertEqual((pk.RESULTS.DRAW, None, None), result)
 
 
-class CompareTest(unittest.TestCase):
-
-    def test_give_full_house_vs_flush_should_win(self):
-        a = ["2H", "4S", "4C", "2D", "4H"]
-        b = ["2S", "8S", "AS", "QS", "3S"]
-        result = pk.compare(a, b)
-        self.assertEqual(pk.RESULTS.WIN, result)
-
-    def test_give_same_rank_value_should_draw(self):
-        a = ["2H", "4S", "4C", "2D", "4H"]
-        b = ["2S", "4D", "4C", "2D", "4H"]
-        result = pk.compare(a, b)
-        self.assertEqual(pk.RESULTS.DRAW, result)
-
-    def test_give_same_rank_not_same_value_should_lose(self):
-        a = ["2H", "4S", "4C", "2D", "4H"]
-        b = ["9S", "4D", "4C", "9D", "4H"]
-        result = pk.compare(a, b)
-        self.assertEqual(pk.RESULTS.LOSE, result)
-
-
 class GetValueCardTest(unittest.TestCase):
 
     def test_give_9_9_9_A_2_should_9_14_2(self):

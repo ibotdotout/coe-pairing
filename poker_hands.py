@@ -2,58 +2,37 @@
 
 from enum import Enum
 RESULTS = Enum('RESULTS', 'WIN DRAW LOSE')
-# WIN, DRAW, LOSE = range(3)
 
 
 def poker_hands(a, b):
-    result = compare(a, b)
-
-    rank_a = ask_rank(a)
-    rank_b = ask_rank(b)
-
-    card_a = get_value_card(a)
-    card_b = get_value_card(b)
-
-    win_card = None
-    win_rank = None
-
-    if result != RESULTS.DRAW:
-        win_rank = rank_a if RESULTS.WIN else rank_b
-        if rank_a == rank_b:
-            for i, j in zip(card_a, card_b):
-                if i != j:
-                    win_card = i if i > j else j
-                    break
-
-            card = [str(i)
-                    for i in range(11)] + ['Jack', 'Queen', 'King', 'Ace']
-            win_card = card[win_card]
-
-    return (result, win_rank, win_card)
-
-
-# Compare
-def compare(a, b):
 
     def get_score(x):
         return ask_rank_score(ask_rank(x))
 
-    result = RESULTS.LOSE
-    score_a = get_score(a)
-    score_b = get_score(b)
+    rank_a, rank_b = ask_rank(a), ask_rank(b)
+    win_card, win_rank = None, None
+    score_a, score_b = get_score(a), get_score(b)
 
-    if score_a > score_b:
-        result = RESULTS.WIN
-    elif score_a == score_b:
-        value_a = get_value_card(a)
-        value_b = get_value_card(b)
+    if score_a == score_b:
+        value_a, value_b = get_value_card(a), get_value_card(b)
         for i, j in zip(value_a, value_b):
             if i != j:
                 result = RESULTS.WIN if i > j else RESULTS.LOSE
+                win_card = i if i > j else j
                 break
         else:
             result = RESULTS.DRAW
-    return result
+    else:
+        result = RESULTS.WIN if score_a > score_b else RESULTS.LOSE
+
+    if result != RESULTS.DRAW:
+        win_rank = rank_a if RESULTS.WIN else rank_b
+        if win_card:
+            card = \
+                [str(i) for i in range(11)] + ['Jack', 'Queen', 'King', 'Ace']
+            win_card = card[win_card]
+
+    return (result, win_rank, win_card)
 
 
 def get_value_card(a):
